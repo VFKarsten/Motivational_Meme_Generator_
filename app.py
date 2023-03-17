@@ -5,7 +5,6 @@ from flask import Flask, render_template, request
 from MemeGenerator.MemeEngine import MemeEngine
 from QuoteEngine.Ingestor import Ingestor
 
-# @TODO Import your Ingestor and MemeEngine classes
 
 app = Flask(__name__)
 
@@ -20,14 +19,12 @@ def setup():
                    './_data/DogQuotes/DogQuotesPDF.pdf',
                    './_data/DogQuotes/DogQuotesCSV.csv']
 
-    # TODO: Use the Ingestor class to parse all files in the
     quotes = []
     for f in quote_files:
         quotes.extend(Ingestor.parse(f))
 
     images_path = "./_data/photos/dog/"
 
-    # TODO: Use the pythons standard library os class to find all
     # images within the images images_path directory
     imgs = []
     for image in os.listdir(images_path):
@@ -43,11 +40,6 @@ quotes, imgs = setup()
 @app.route('/')
 def meme_rand():
     """ Generate a random meme """
-
-    # @TODO:
-    # Use the random python standard library class to:
-    # 1. select a random image from imgs array
-    # 2. select a random quote from the quotes array
 
     img = random.choice(imgs)
     quote = random.choice(quotes)
