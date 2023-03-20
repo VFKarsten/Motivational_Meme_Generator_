@@ -7,6 +7,8 @@ from typing import List
 
 
 class DocxImporter(IngestorInterface):
+    """Ingest the docx file."""
+
     allowed_extensions = ["docx"]
 
     @classmethod

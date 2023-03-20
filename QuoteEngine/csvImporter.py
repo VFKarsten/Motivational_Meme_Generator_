@@ -8,6 +8,8 @@ from .IngestorInterface import IngestorInterface
 
 
 class CSVImporter(IngestorInterface):
+    """Ingest the csv file."""
+
     allowed_extensions = ["csv"]
 
     @classmethod

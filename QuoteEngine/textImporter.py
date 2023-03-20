@@ -6,6 +6,8 @@ from typing import List
 
 
 class TextImporter(IngestorInterface):
+    """Ingest the txt file."""
+
     allowed_extensions = ["txt"]
 
     @classmethod

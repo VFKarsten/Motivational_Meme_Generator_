@@ -1,4 +1,4 @@
-""" Base module for quote engine """
+"""Base module for quote engine."""
 
 from .csvImporter import CSVImporter
 from .docxImporter import DocxImporter

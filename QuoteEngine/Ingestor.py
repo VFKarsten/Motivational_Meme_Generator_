@@ -16,6 +16,7 @@ class Ingestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path) -> List[QuoteModel]:
+        """Ingest the file with the format ingestors."""
         for ingestor in cls.ingestors:
             if ingestor.can_ingest(path):
                 return ingestor.parse(path)
