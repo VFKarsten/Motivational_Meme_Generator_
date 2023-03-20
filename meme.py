@@ -1,3 +1,6 @@
+"""Meme Generator to execute from the Command-line."""
+
+
 import os
 import random
 from MemeGenerator.MemeEngine import MemeEngine
@@ -8,7 +11,6 @@ import argparse
 
 def generate_meme(path=None, body=None, author=None):
     """Generate a meme given a path and a quote."""
-
     if path is None:
         images = "./_data/photos/dog/"
         ima_ges = []
@@ -40,10 +42,14 @@ def generate_meme(path=None, body=None, author=None):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='create a meme with body, author and path!!')
-    parser.add_argument('--body', type=str, default=None, help="quote body to add to the image")
-    parser.add_argument('--author', type=str, default=None, help="add author of the text")
-    parser.add_argument('--path', type=str, default=None, help="file path to image")
+    parser = argparse.ArgumentParser(description="create a meme with body, "
+                                                 "author and path!!")
+    parser.add_argument('--body', type=str, default=None,
+                        help="quote body to add to the image")
+    parser.add_argument('--author', type=str, default=None,
+                        help="add author of the text")
+    parser.add_argument('--path', type=str, default=None,
+                        help="file path to image")
 
     args = parser.parse_args()
     print(generate_meme(args.path, args.body, args.author))

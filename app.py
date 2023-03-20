@@ -1,3 +1,6 @@
+"""Meme generator use the Flask interface."""
+
+
 import random
 import os
 import requests
@@ -12,8 +15,7 @@ meme = MemeEngine('./static')
 
 
 def setup():
-    """ Load all resources """
-
+    """Load all resources."""
     quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
                    './_data/DogQuotes/DogQuotesDOCX.docx',
                    './_data/DogQuotes/DogQuotesPDF.pdf',
@@ -39,8 +41,7 @@ quotes, imgs = setup()
 
 @app.route('/')
 def meme_rand():
-    """ Generate a random meme """
-
+    """Generate a random meme."""
     img = random.choice(imgs)
     quote = random.choice(quotes)
     path = meme.make_meme(img, quote.body, quote.author)
@@ -49,27 +50,28 @@ def meme_rand():
 
 @app.route('/create', methods=['GET'])
 def meme_form():
-    """ User input for meme information """
+    """User input for meme information."""
     return render_template('meme_form.html')
 
 
 @app.route('/create', methods=['POST'])
 def meme_post():
-    """ Create a user defined meme """
-    body = request.form['body']
-    author = request.form['author']
-    image_url = request.form['image_url']
-    get = requests.get(image_url, allow_redirects=True)
+    """Create a user defined meme."""
+    tmp = "./temp_image.jpg"
+    img_url = request.form.get("image_url")
+    try:
+        img_data = requests.get(url=img_url)
 
-    image_name = random.randint(0, 100000000)
-    tmp = f'./tmp/{image_name}.jpg'
-    img = open(tmp, 'wb')
-    img.write(get.content)
-    img.close()
-    picture = MemeEngine.MemeEngine('./static')
-    path = picture.make_meme(tmp, body, author)
-
-    return render_template('meme.html', path=path)
+        with open(tmp, "wb") as open_file:
+            open_file.write(img_data.content)
+            body = request.form["body"]
+            author = request.form["author"]
+            path = meme.make_meme(tmp, body, author)
+        os.remove(tmp)
+        return render_template('meme.html', path=path)
+    except Exception:
+        print("Bad Image URL")
+        return render_template('meme_error.html')
 
 
 if __name__ == "__main__":
